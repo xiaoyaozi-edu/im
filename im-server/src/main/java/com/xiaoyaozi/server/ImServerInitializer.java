@@ -25,6 +25,6 @@ public class ImServerInitializer extends ChannelInitializer<SocketChannel> {
                 .addLast(new ProtobufDecoder(ImMessageProto.ImMessage.getDefaultInstance()))
                 .addLast(new ProtobufVarint32LengthFieldPrepender())
                 .addLast(new ProtobufEncoder())
-        .addLast();
+                .addLast(new ImServerHandle());
     }
 }

@@ -1,5 +1,6 @@
 package com.xiaoyaozi.server;
 
+import com.xiaoyaozi.enums.ImMessageType;
 import com.xiaoyaozi.protocol.ImMessageProto;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -13,8 +14,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
 public class ImServerHandle extends SimpleChannelInboundHandler<ImMessageProto.ImMessage> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, ImMessageProto.ImMessage imMessage) throws Exception {
-
+    protected void channelRead0(ChannelHandlerContext ctx, ImMessageProto.ImMessage imMessage) throws Exception {
+        System.out.println(imMessage.getMsg());
+        ImMessageProto.ImMessage messageProto = ImMessageProto.ImMessage.newBuilder().setFromId(2L).setType(ImMessageType.MESSAGE.getType()).setMsg("服务端返回消息：" + imMessage.getMsg()).build();
+        ctx.writeAndFlush(messageProto);
     }
 
     /**
