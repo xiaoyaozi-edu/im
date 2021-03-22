@@ -1,0 +1,19 @@
+route:
+  type: random
+
+zk:
+  # zk地址
+  address: 112.74.171.15:2181
+  # zk上记录 服务ip的根节点
+  path:
+    server: /serverIp
+  timeout:
+    # 链接超时时间 ms
+    connect: 10000
+    # seesion超时时间 ms
+    session: 10000
+
+im:
+  server:
+    # websocket监听端口
+    port: 10010
