@@ -1,7 +1,7 @@
 package com.xiaoyaozi.enums;
 
 /**
- * tip:
+ * tip: 消息类型
  *
  * @author xiaoyaozi
  * createTime: 2021-03-20 23:20
@@ -9,7 +9,7 @@ package com.xiaoyaozi.enums;
 public enum ImMessageType {
 
     /**
-     * 登录、心跳、消息
+     * 消息类型：登录、心跳、消息
      */
     LOGIN(1, "登录"),
     PING(2, "心跳"),
