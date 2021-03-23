@@ -8,10 +8,14 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
+import org.apache.zookeeper.CreateMode;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * tip:
@@ -23,10 +27,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class NettyConfig implements InitializingBean {
 
-    @Value("${zk.path.server}")
-    private String zkServerPath;
-    @Value("${im.server.port")
-    private String imServerPort;
+    @Value("${zk.node.server}")
+    private String zkServerNode;
+    @Value("${im.server.port}")
+    private Integer imServerPort;
 
     @Autowired
     private CuratorFramework client;
@@ -37,18 +41,25 @@ public class NettyConfig implements InitializingBean {
                 .group(new NioEventLoopGroup(1, new DefaultThreadFactory("boss")),
                         new NioEventLoopGroup(0, new DefaultThreadFactory("work-server")))
                 .channel(NioServerSocketChannel.class)
-                .localAddress(10010)
                 .childHandler(new ImServerInitializer());
-        ChannelFuture future = serverBootstrap.bind(10010).sync();
+        ChannelFuture future = serverBootstrap.bind(imServerPort).sync();
         if (future.isSuccess()) {
             log.info("服务端启动成功");
-//            client.create().creatingParentsIfNeeded().forPath(zkServerPath)
+            registerServerIpToZk();
         } else {
             log.error("服务端启动失败", future.cause());
         }
     }
 
     private void registerServerIpToZk() {
-        
+        try {
+            String hostAddress = InetAddress.getLocalHost().getHostAddress();
+            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL)
+                    .forPath(String.format("%s/%s:%s", zkServerNode, hostAddress, imServerPort));
+        } catch (UnknownHostException e) {
+            log.error("获取本机ip地址出错", e);
+        } catch (Exception e) {
+            log.error("服务端注册到zk出错", e);
+        }
     }
 }

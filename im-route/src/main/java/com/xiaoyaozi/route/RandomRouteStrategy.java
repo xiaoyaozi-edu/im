@@ -1,6 +1,6 @@
 package com.xiaoyaozi.route;
 
-import com.xiaoyaozi.route.RouteStrategy;
+import org.apache.curator.framework.CuratorFramework;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +16,12 @@ import java.util.concurrent.ThreadLocalRandom;
 @ConditionalOnProperty(prefix = "route", name = "type", havingValue = "random")
 public class RandomRouteStrategy extends RouteStrategy {
 
+    public RandomRouteStrategy(CuratorFramework zkClient, String zkServerNode) {
+        super(zkClient, zkServerNode);
+    }
+
     @Override
-    protected String routeServerIp(Long key) {
+    public String routeServerIp(Long key) {
         super.checkServerIsAvailable();
         return serverIpList.get(ThreadLocalRandom.current().nextInt(serverIpList.size()));
     }

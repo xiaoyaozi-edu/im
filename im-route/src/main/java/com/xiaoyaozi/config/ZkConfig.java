@@ -1,8 +1,5 @@
 package com.xiaoyaozi.config;
 
-import com.xiaoyaozi.route.LoopRouteStrategy;
-import com.xiaoyaozi.route.RouteStrategy;
-import org.apache.curator.CuratorZookeeperClient;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
@@ -25,6 +22,13 @@ public class ZkConfig {
     private int connectTimeout;
     @Value("${zk.timeout.session}")
     private int sessionTimeout;
+    @Value("${zk.node.server}")
+    private String zkServerNode;
+
+    @Bean
+    public String zkServerNode() {
+        return zkServerNode;
+    }
 
     @Bean
     public CuratorFramework client() {
@@ -38,4 +42,5 @@ public class ZkConfig {
         client.start();
         return client;
     }
+
 }

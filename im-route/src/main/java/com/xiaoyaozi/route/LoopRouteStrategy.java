@@ -1,9 +1,10 @@
 package com.xiaoyaozi.route;
 
+import org.apache.curator.framework.CuratorFramework;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * tip: 轮询策略
@@ -15,12 +16,27 @@ import java.util.concurrent.atomic.AtomicInteger;
 @ConditionalOnProperty(prefix = "route", name = "type", havingValue = "loop")
 public class LoopRouteStrategy extends RouteStrategy {
 
-    private final AtomicInteger count = new AtomicInteger();
+    private final AtomicLong count = new AtomicLong();
+    private boolean isPowerOfTwo;
+
+    public LoopRouteStrategy(CuratorFramework zkClient, String zkServerNode) {
+        super(zkClient, zkServerNode);
+    }
 
     @Override
-    protected String routeServerIp(Long key) {
+    public String routeServerIp(Long key) {
         super.checkServerIsAvailable();
-        // 绝对值适应数字溢出
-        return serverIpList.get(Math.abs(count.getAndAdd(1) % serverIpList.size()));
+        // 这里可以注意下，为什么 &：不需要取绝对值，%：需要取绝对值
+        if (isPowerOfTwo) {
+            return serverIpList.get((int) (count.getAndIncrement() & serverIpList.size() - 1));
+        }
+        return serverIpList.get((int) Math.abs(count.getAndIncrement() % serverIpList.size()));
+    }
+
+    @Override
+    protected void updateServerIpList() {
+        super.updateServerIpList();
+        int size = serverIpList.size();
+        isPowerOfTwo = ((size & -size) == size);
     }
 }
