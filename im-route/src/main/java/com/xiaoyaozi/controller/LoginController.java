@@ -25,7 +25,8 @@ public class LoginController {
 
     @PostMapping()
     public R<LoginInfoResp> login(@RequestBody LoginInfoReq loginInfoReq) {
-        return R.success(LoginInfoResp.builder().account(loginInfoReq.getAccount()).serverIp(routeStrategy.routeServerIp(null)).build());
+        return R.success(LoginInfoResp.builder().account(loginInfoReq.getAccount())
+                .userId(System.currentTimeMillis()).serverIp(routeStrategy.routeServerIp(null)).build());
     }
 
 }

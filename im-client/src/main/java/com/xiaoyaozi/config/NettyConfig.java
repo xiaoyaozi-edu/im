@@ -36,36 +36,73 @@ public class NettyConfig implements InitializingBean {
     private String account;
     @Value("${user.password}")
     private String password;
+    private Channel channel;
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void afterPropertiesSet() throws Exception {
-        String resp = HttpRequest.post("http://localhost:8899/login").body(JSON.toJSONString(LoginInfoReq.builder().account(account).password(password).build()))
+    public void afterPropertiesSet() {
+        prepareConnectImServer();
+    }
+
+    /**
+     * tip: 准备连接服务器
+     *
+     * @author xiaoyaozi
+     * createTime: 2021-03-23 23:38
+     */
+    @SuppressWarnings("unchecked")
+    public void prepareConnectImServer() {
+        String resp = HttpRequest.post("http://localhost:8899/login")
+                .body(JSON.toJSONString(LoginInfoReq.builder().account(account).password(password).build()))
                 .execute().body();
         R<JSONObject> parse = JSON.parseObject(resp, R.class);
         if (parse.isSuccess()) {
-            connectImServer(parse.getData().toJavaObject(LoginInfoResp.class).getServerIp());
+            tryConnectImServer(parse.getData().toJavaObject(LoginInfoResp.class));
         } else {
             log.error("登录接口异常，错误原因：{}", parse.getMsg());
         }
     }
 
-    private void connectImServer(String serverIp) throws InterruptedException {
+    /**
+     * tip: 尝试连接服务器
+     *
+     * @param loginInfo 用户信息
+     * @author xiaoyaozi
+     * createTime: 2021-03-23 23:37
+     */
+    private void tryConnectImServer(LoginInfoResp loginInfo) {
         Bootstrap bootstrap = new Bootstrap()
                 .group(new NioEventLoopGroup(0, new DefaultThreadFactory("work-client")))
                 .channel(NioSocketChannel.class)
                 .handler(new ImClientInitializer());
-        String[] ipInfo = serverIp.split(":");
-        ChannelFuture future = bootstrap.connect(ipInfo[0], Integer.parseInt(ipInfo[1])).sync();
-        if (future.isSuccess()) {
-            log.info("客户端启动成功");
+        String[] ipInfo = loginInfo.getServerIp().split(":");
+        ChannelFuture future;
+        try {
+            future = bootstrap.connect(ipInfo[0], Integer.parseInt(ipInfo[1])).sync();
+            if (future.isSuccess()) {
+                log.info("客户端启动成功");
+                channel = future.channel();
+                sendConnectSuccessInfo(loginInfo.getUserId());
+
+                Scanner sc = new Scanner(System.in);
+                while (true) {
+                    String msg = sc.nextLine();
+                    ImMessageProto.ImMessage messageProto = ImMessageProto.ImMessage.newBuilder().setFromId(1L).setType(ImMessageType.MESSAGE.getType()).setMsg(msg).build();
+                    channel.writeAndFlush(messageProto);
+                }
+            }
+        } catch (InterruptedException e) {
+            log.error("client连接server出错", e);
         }
-        Channel channel = future.channel();
-        Scanner sc = new Scanner(System.in);
-        while (true) {
-            String msg = sc.nextLine();
-            ImMessageProto.ImMessage messageProto = ImMessageProto.ImMessage.newBuilder().setFromId(1L).setType(ImMessageType.MESSAGE.getType()).setMsg(msg).build();
-            channel.writeAndFlush(messageProto);
-        }
+    }
+
+    /**
+     * tip: 发送连接成功的信息至服务端
+     *
+     * @author xiaoyaozi
+     * createTime: 2021-03-23 22:26
+     */
+    private void sendConnectSuccessInfo(Long userId) {
+        ImMessageProto.ImMessage message = ImMessageProto.ImMessage.newBuilder().setFromId(userId).setType(ImMessageType.CONNECT.getType()).build();
+        channel.writeAndFlush(message);
     }
 }

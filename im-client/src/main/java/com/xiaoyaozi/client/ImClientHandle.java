@@ -6,8 +6,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * tip:
  *

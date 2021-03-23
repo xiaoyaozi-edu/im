@@ -19,8 +19,9 @@ public class ImServerHandle extends SimpleChannelInboundHandler<ImMessageProto.I
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ImMessageProto.ImMessage imMessage) throws Exception {
-        if (imMessage.getType() == ImMessageType.LOGIN.getType()) {
-
+        if (imMessage.getType() == ImMessageType.CONNECT.getType()) {
+            System.out.println(imMessage.getFromId());
+            System.out.println(imMessage.getMsg());
         } else if (imMessage.getType() == ImMessageType.PING.getType()) {
 
         } else if (imMessage.getType() == ImMessageType.MESSAGE.getType()) {

@@ -26,6 +26,10 @@ public class LoginInfoResp implements Serializable {
      */
     private String account;
     /**
+     * userId
+     */
+    private Long userId;
+    /**
      * im服务端地址
      */
     private String serverIp;

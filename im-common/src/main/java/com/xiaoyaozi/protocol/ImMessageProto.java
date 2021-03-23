@@ -5,17 +5,17 @@ package com.xiaoyaozi.protocol;
 public final class ImMessageProto {
   private ImMessageProto() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
+          com.google.protobuf.ExtensionRegistryLite registry) {
   }
 
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistry registry) {
+          com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
+            (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface ImMessageOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:ImMessage)
-      com.google.protobuf.MessageOrBuilder {
+          // @@protoc_insertion_point(interface_extends:ImMessage)
+          com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>required int64 fromId = 1;</code>
@@ -40,30 +40,30 @@ public final class ImMessageProto {
     int getType();
 
     /**
-     * <code>required string msg = 3;</code>
+     * <code>optional string msg = 3;</code>
      * @return Whether the msg field is set.
      */
     boolean hasMsg();
     /**
-     * <code>required string msg = 3;</code>
+     * <code>optional string msg = 3;</code>
      * @return The msg.
      */
-    String getMsg();
+    java.lang.String getMsg();
     /**
-     * <code>required string msg = 3;</code>
+     * <code>optional string msg = 3;</code>
      * @return The bytes for msg.
      */
     com.google.protobuf.ByteString
-        getMsgBytes();
+    getMsgBytes();
   }
   /**
    * Protobuf type {@code ImMessage}
    */
   public static final class ImMessage extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:ImMessage)
-      ImMessageOrBuilder {
-  private static final long serialVersionUID = 0L;
+          com.google.protobuf.GeneratedMessageV3 implements
+          // @@protoc_insertion_point(message_implements:ImMessage)
+          ImMessageOrBuilder {
+    private static final long serialVersionUID = 0L;
     // Use ImMessage.newBuilder() to construct.
     private ImMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -72,29 +72,29 @@ public final class ImMessageProto {
       msg_ = "";
     }
 
-    @Override
+    @java.lang.Override
     @SuppressWarnings({"unused"})
-    protected Object newInstance(
-        UnusedPrivateParameter unused) {
+    protected java.lang.Object newInstance(
+            UnusedPrivateParameter unused) {
       return new ImMessage();
     }
 
-    @Override
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
     private ImMessage(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new NullPointerException();
+        throw new java.lang.NullPointerException();
       }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+              com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -121,7 +121,7 @@ public final class ImMessageProto {
             }
             default: {
               if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+                      input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -132,23 +132,23 @@ public final class ImMessageProto {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+                e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
+    getDescriptor() {
       return ImMessageProto.internal_static_ImMessage_descriptor;
     }
 
-    @Override
-    protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    internalGetFieldAccessorTable() {
       return ImMessageProto.internal_static_ImMessage_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              ImMessage.class, Builder.class);
+              .ensureFieldAccessorsInitialized(
+                      ImMessageProto.ImMessage.class, ImMessageProto.ImMessage.Builder.class);
     }
 
     private int bitField0_;
@@ -158,7 +158,7 @@ public final class ImMessageProto {
      * <code>required int64 fromId = 1;</code>
      * @return Whether the fromId field is set.
      */
-    @Override
+    @java.lang.Override
     public boolean hasFromId() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -166,7 +166,7 @@ public final class ImMessageProto {
      * <code>required int64 fromId = 1;</code>
      * @return The fromId.
      */
-    @Override
+    @java.lang.Override
     public long getFromId() {
       return fromId_;
     }
@@ -177,7 +177,7 @@ public final class ImMessageProto {
      * <code>required int32 type = 2;</code>
      * @return Whether the type field is set.
      */
-    @Override
+    @java.lang.Override
     public boolean hasType() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -185,34 +185,34 @@ public final class ImMessageProto {
      * <code>required int32 type = 2;</code>
      * @return The type.
      */
-    @Override
+    @java.lang.Override
     public int getType() {
       return type_;
     }
 
     public static final int MSG_FIELD_NUMBER = 3;
-    private volatile Object msg_;
+    private volatile java.lang.Object msg_;
     /**
-     * <code>required string msg = 3;</code>
+     * <code>optional string msg = 3;</code>
      * @return Whether the msg field is set.
      */
-    @Override
+    @java.lang.Override
     public boolean hasMsg() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
-     * <code>required string msg = 3;</code>
+     * <code>optional string msg = 3;</code>
      * @return The msg.
      */
-    @Override
-    public String getMsg() {
-      Object ref = msg_;
-      if (ref instanceof String) {
-        return (String) ref;
+    @java.lang.Override
+    public java.lang.String getMsg() {
+      java.lang.Object ref = msg_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
           msg_ = s;
         }
@@ -220,17 +220,17 @@ public final class ImMessageProto {
       }
     }
     /**
-     * <code>required string msg = 3;</code>
+     * <code>optional string msg = 3;</code>
      * @return The bytes for msg.
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.ByteString
-        getMsgBytes() {
-      Object ref = msg_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
+    getMsgBytes() {
+      java.lang.Object ref = msg_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
         msg_ = b;
         return b;
       } else {
@@ -239,7 +239,7 @@ public final class ImMessageProto {
     }
 
     private byte memoizedIsInitialized = -1;
-    @Override
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -253,17 +253,13 @@ public final class ImMessageProto {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasMsg()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
+            throws java.io.IOException {
       if (((bitField0_ & 0x00000001) != 0)) {
         output.writeInt64(1, fromId_);
       }
@@ -276,7 +272,7 @@ public final class ImMessageProto {
       unknownFields.writeTo(output);
     }
 
-    @Override
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -284,11 +280,11 @@ public final class ImMessageProto {
       size = 0;
       if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, fromId_);
+                .computeInt64Size(1, fromId_);
       }
       if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, type_);
+                .computeInt32Size(2, type_);
       }
       if (((bitField0_ & 0x00000004) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, msg_);
@@ -298,36 +294,36 @@ public final class ImMessageProto {
       return size;
     }
 
-    @Override
-    public boolean equals(final Object obj) {
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-       return true;
+        return true;
       }
-      if (!(obj instanceof ImMessage)) {
+      if (!(obj instanceof ImMessageProto.ImMessage)) {
         return super.equals(obj);
       }
-      ImMessage other = (ImMessage) obj;
+      ImMessageProto.ImMessage other = (ImMessageProto.ImMessage) obj;
 
       if (hasFromId() != other.hasFromId()) return false;
       if (hasFromId()) {
         if (getFromId()
-            != other.getFromId()) return false;
+                != other.getFromId()) return false;
       }
       if (hasType() != other.hasType()) return false;
       if (hasType()) {
         if (getType()
-            != other.getType()) return false;
+                != other.getType()) return false;
       }
       if (hasMsg() != other.hasMsg()) return false;
       if (hasMsg()) {
         if (!getMsg()
-            .equals(other.getMsg())) return false;
+                .equals(other.getMsg())) return false;
       }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -337,7 +333,7 @@ public final class ImMessageProto {
       if (hasFromId()) {
         hash = (37 * hash) + FROMID_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getFromId());
+                getFromId());
       }
       if (hasType()) {
         hash = (37 * hash) + TYPE_FIELD_NUMBER;
@@ -352,93 +348,93 @@ public final class ImMessageProto {
       return hash;
     }
 
-    public static ImMessage parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static ImMessageProto.ImMessage parseFrom(
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static ImMessage parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static ImMessageProto.ImMessage parseFrom(
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static ImMessage parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static ImMessageProto.ImMessage parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static ImMessage parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static ImMessageProto.ImMessage parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static ImMessage parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static ImMessageProto.ImMessage parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static ImMessage parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+    public static ImMessageProto.ImMessage parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static ImMessage parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
+    public static ImMessageProto.ImMessage parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
-    public static ImMessage parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static ImMessageProto.ImMessage parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static ImMessage parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
+    public static ImMessageProto.ImMessage parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+              .parseDelimitedWithIOException(PARSER, input);
     }
-    public static ImMessage parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static ImMessageProto.ImMessage parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static ImMessage parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
+    public static ImMessageProto.ImMessage parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
-    public static ImMessage parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+    public static ImMessageProto.ImMessage parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @Override
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(ImMessage prototype) {
+    public static Builder newBuilder(ImMessageProto.ImMessage prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @Override
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
+              ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @Override
+    @java.lang.Override
     protected Builder newBuilderForType(
-        BuilderParent parent) {
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -446,20 +442,20 @@ public final class ImMessageProto {
      * Protobuf type {@code ImMessage}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:ImMessage)
-        ImMessageOrBuilder {
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:ImMessage)
+            ImMessageProto.ImMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
+      getDescriptor() {
         return ImMessageProto.internal_static_ImMessage_descriptor;
       }
 
-      @Override
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internalGetFieldAccessorTable() {
         return ImMessageProto.internal_static_ImMessage_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                ImMessage.class, Builder.class);
+                .ensureFieldAccessorsInitialized(
+                        ImMessageProto.ImMessage.class, ImMessageProto.ImMessage.Builder.class);
       }
 
       // Construct using ImMessageProto.ImMessage.newBuilder()
@@ -468,7 +464,7 @@ public final class ImMessageProto {
       }
 
       private Builder(
-          BuilderParent parent) {
+              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -477,7 +473,7 @@ public final class ImMessageProto {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @Override
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         fromId_ = 0L;
@@ -489,29 +485,29 @@ public final class ImMessageProto {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
+      getDescriptorForType() {
         return ImMessageProto.internal_static_ImMessage_descriptor;
       }
 
-      @Override
-      public ImMessage getDefaultInstanceForType() {
-        return ImMessage.getDefaultInstance();
+      @java.lang.Override
+      public ImMessageProto.ImMessage getDefaultInstanceForType() {
+        return ImMessageProto.ImMessage.getDefaultInstance();
       }
 
-      @Override
-      public ImMessage build() {
-        ImMessage result = buildPartial();
+      @java.lang.Override
+      public ImMessageProto.ImMessage build() {
+        ImMessageProto.ImMessage result = buildPartial();
         if (!result.isInitialized()) {
-          throw Builder.newUninitializedMessageException(result);
+          throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @Override
-      public ImMessage buildPartial() {
-        ImMessage result = new ImMessage(this);
+      @java.lang.Override
+      public ImMessageProto.ImMessage buildPartial() {
+        ImMessageProto.ImMessage result = new ImMessageProto.ImMessage(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) != 0)) {
@@ -531,50 +527,50 @@ public final class ImMessageProto {
         return result;
       }
 
-      @Override
+      @java.lang.Override
       public Builder clone() {
         return super.clone();
       }
-      @Override
+      @java.lang.Override
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.setField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+              com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
-      @Override
+      @java.lang.Override
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
-      @Override
+      @java.lang.Override
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              int index, java.lang.Object value) {
         return super.setRepeatedField(field, index, value);
       }
-      @Override
+      @java.lang.Override
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.addRepeatedField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof ImMessage) {
-          return mergeFrom((ImMessage)other);
+        if (other instanceof ImMessageProto.ImMessage) {
+          return mergeFrom((ImMessageProto.ImMessage)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(ImMessage other) {
-        if (other == ImMessage.getDefaultInstance()) return this;
+      public Builder mergeFrom(ImMessageProto.ImMessage other) {
+        if (other == ImMessageProto.ImMessage.getDefaultInstance()) return this;
         if (other.hasFromId()) {
           setFromId(other.getFromId());
         }
@@ -591,7 +587,7 @@ public final class ImMessageProto {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasFromId()) {
           return false;
@@ -599,22 +595,19 @@ public final class ImMessageProto {
         if (!hasType()) {
           return false;
         }
-        if (!hasMsg()) {
-          return false;
-        }
         return true;
       }
 
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        ImMessage parsedMessage = null;
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+        ImMessageProto.ImMessage parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (ImMessage) e.getUnfinishedMessage();
+          parsedMessage = (ImMessageProto.ImMessage) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -630,7 +623,7 @@ public final class ImMessageProto {
        * <code>required int64 fromId = 1;</code>
        * @return Whether the fromId field is set.
        */
-      @Override
+      @java.lang.Override
       public boolean hasFromId() {
         return ((bitField0_ & 0x00000001) != 0);
       }
@@ -638,7 +631,7 @@ public final class ImMessageProto {
        * <code>required int64 fromId = 1;</code>
        * @return The fromId.
        */
-      @Override
+      @java.lang.Override
       public long getFromId() {
         return fromId_;
       }
@@ -669,7 +662,7 @@ public final class ImMessageProto {
        * <code>required int32 type = 2;</code>
        * @return Whether the type field is set.
        */
-      @Override
+      @java.lang.Override
       public boolean hasType() {
         return ((bitField0_ & 0x00000002) != 0);
       }
@@ -677,7 +670,7 @@ public final class ImMessageProto {
        * <code>required int32 type = 2;</code>
        * @return The type.
        */
-      @Override
+      @java.lang.Override
       public int getType() {
         return type_;
       }
@@ -703,43 +696,43 @@ public final class ImMessageProto {
         return this;
       }
 
-      private Object msg_ = "";
+      private java.lang.Object msg_ = "";
       /**
-       * <code>required string msg = 3;</code>
+       * <code>optional string msg = 3;</code>
        * @return Whether the msg field is set.
        */
       public boolean hasMsg() {
         return ((bitField0_ & 0x00000004) != 0);
       }
       /**
-       * <code>required string msg = 3;</code>
+       * <code>optional string msg = 3;</code>
        * @return The msg.
        */
-      public String getMsg() {
-        Object ref = msg_;
-        if (!(ref instanceof String)) {
+      public java.lang.String getMsg() {
+        java.lang.Object ref = msg_;
+        if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+                  (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
           if (bs.isValidUtf8()) {
             msg_ = s;
           }
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
       /**
-       * <code>required string msg = 3;</code>
+       * <code>optional string msg = 3;</code>
        * @return The bytes for msg.
        */
       public com.google.protobuf.ByteString
-          getMsgBytes() {
-        Object ref = msg_;
+      getMsgBytes() {
+        java.lang.Object ref = msg_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
           msg_ = b;
           return b;
         } else {
@@ -747,22 +740,22 @@ public final class ImMessageProto {
         }
       }
       /**
-       * <code>required string msg = 3;</code>
+       * <code>optional string msg = 3;</code>
        * @param value The msg to set.
        * @return This builder for chaining.
        */
       public Builder setMsg(
-          String value) {
+              java.lang.String value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000004;
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000004;
         msg_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required string msg = 3;</code>
+       * <code>optional string msg = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearMsg() {
@@ -772,29 +765,29 @@ public final class ImMessageProto {
         return this;
       }
       /**
-       * <code>required string msg = 3;</code>
+       * <code>optional string msg = 3;</code>
        * @param value The bytes for msg to set.
        * @return This builder for chaining.
        */
       public Builder setMsgBytes(
-          com.google.protobuf.ByteString value) {
+              com.google.protobuf.ByteString value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000004;
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000004;
         msg_ = value;
         onChanged();
         return this;
       }
-      @Override
+      @java.lang.Override
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @Override
+      @java.lang.Override
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
@@ -803,22 +796,22 @@ public final class ImMessageProto {
     }
 
     // @@protoc_insertion_point(class_scope:ImMessage)
-    private static final ImMessage DEFAULT_INSTANCE;
+    private static final ImMessageProto.ImMessage DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new ImMessage();
+      DEFAULT_INSTANCE = new ImMessageProto.ImMessage();
     }
 
-    public static ImMessage getDefaultInstance() {
+    public static ImMessageProto.ImMessage getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    @Deprecated public static final com.google.protobuf.Parser<ImMessage>
-        PARSER = new com.google.protobuf.AbstractParser<ImMessage>() {
-      @Override
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<ImMessage>
+            PARSER = new com.google.protobuf.AbstractParser<ImMessage>() {
+      @java.lang.Override
       public ImMessage parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
         return new ImMessage(input, extensionRegistry);
       }
     };
@@ -827,45 +820,45 @@ public final class ImMessageProto {
       return PARSER;
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Parser<ImMessage> getParserForType() {
       return PARSER;
     }
 
-    @Override
-    public ImMessage getDefaultInstanceForType() {
+    @java.lang.Override
+    public ImMessageProto.ImMessage getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ImMessage_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ImMessage_fieldAccessorTable;
+          internal_static_ImMessage_descriptor;
+  private static final
+  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internal_static_ImMessage_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
-      getDescriptor() {
+  getDescriptor() {
     return descriptor;
   }
   private static  com.google.protobuf.Descriptors.FileDescriptor
-      descriptor;
+          descriptor;
   static {
-    String[] descriptorData = {
-      "\n\024ImMessageProto.proto\"6\n\tImMessage\022\016\n\006f" +
-      "romId\030\001 \002(\003\022\014\n\004type\030\002 \002(\005\022\013\n\003msg\030\003 \002(\t"
+    java.lang.String[] descriptorData = {
+            "\n\024ImMessageProto.proto\"6\n\tImMessage\022\016\n\006f" +
+                    "romId\030\001 \002(\003\022\014\n\004type\030\002 \002(\005\022\013\n\003msg\030\003 \001(\t"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
-      .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
+            .internalBuildGeneratedFileFrom(descriptorData,
+                    new com.google.protobuf.Descriptors.FileDescriptor[] {
+                    });
     internal_static_ImMessage_descriptor =
-      getDescriptor().getMessageTypes().get(0);
+            getDescriptor().getMessageTypes().get(0);
     internal_static_ImMessage_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ImMessage_descriptor,
-        new String[] { "FromId", "Type", "Msg", });
+            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_ImMessage_descriptor,
+            new java.lang.String[] { "FromId", "Type", "Msg", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

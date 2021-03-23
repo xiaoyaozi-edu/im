@@ -9,9 +9,9 @@ package com.xiaoyaozi.enums;
 public enum ImMessageType {
 
     /**
-     * 消息类型：登录、心跳、消息
+     * 消息类型：连接、心跳、消息
      */
-    LOGIN(1, "登录"),
+    CONNECT(1, "连接"),
     PING(2, "心跳"),
     MESSAGE(3, "消息");
 
