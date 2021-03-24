@@ -4,6 +4,7 @@ import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xiaoyaozi.base.R;
+import com.xiaoyaozi.client.ImClientChannelManage;
 import com.xiaoyaozi.client.ImClientInitializer;
 import com.xiaoyaozi.enums.ImMessageType;
 import com.xiaoyaozi.protocol.ImMessageProto;
@@ -81,12 +82,17 @@ public class NettyConfig implements InitializingBean {
             if (future.isSuccess()) {
                 log.info("客户端启动成功");
                 channel = future.channel();
-                sendConnectSuccessInfo(loginInfo.getUserId());
+                Long userId = loginInfo.getUserId();
+                ImClientChannelManage.PING_MESSAGE = ImMessageProto.ImMessage.newBuilder().setFromId(userId)
+                        .setType(ImMessageType.PING.getType()).build();
+                sendConnectSuccessInfo(userId);
 
                 Scanner sc = new Scanner(System.in);
                 while (true) {
                     String msg = sc.nextLine();
-                    ImMessageProto.ImMessage messageProto = ImMessageProto.ImMessage.newBuilder().setFromId(1L).setType(ImMessageType.MESSAGE.getType()).setMsg(msg).build();
+                    String[] split = msg.split(";");
+                    ImMessageProto.ImMessage messageProto = ImMessageProto.ImMessage.newBuilder().setType(ImMessageType.MESSAGE.getType())
+                            .setFromId(userId).setToId(Long.parseLong(split[0])).setMsg(split[1]).build();
                     channel.writeAndFlush(messageProto);
                 }
             }

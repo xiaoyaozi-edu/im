@@ -18,39 +18,50 @@ public final class ImMessageProto {
           com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>required int64 fromId = 1;</code>
-     * @return Whether the fromId field is set.
-     */
-    boolean hasFromId();
-    /**
-     * <code>required int64 fromId = 1;</code>
-     * @return The fromId.
-     */
-    long getFromId();
-
-    /**
-     * <code>required int32 type = 2;</code>
+     * <code>required int32 type = 1;</code>
      * @return Whether the type field is set.
      */
     boolean hasType();
     /**
-     * <code>required int32 type = 2;</code>
+     * <code>required int32 type = 1;</code>
      * @return The type.
      */
     int getType();
 
     /**
-     * <code>optional string msg = 3;</code>
+     * <code>required int64 fromId = 2;</code>
+     * @return Whether the fromId field is set.
+     */
+    boolean hasFromId();
+    /**
+     * <code>required int64 fromId = 2;</code>
+     * @return The fromId.
+     */
+    long getFromId();
+
+    /**
+     * <code>optional int64 toId = 3;</code>
+     * @return Whether the toId field is set.
+     */
+    boolean hasToId();
+    /**
+     * <code>optional int64 toId = 3;</code>
+     * @return The toId.
+     */
+    long getToId();
+
+    /**
+     * <code>optional string msg = 4;</code>
      * @return Whether the msg field is set.
      */
     boolean hasMsg();
     /**
-     * <code>optional string msg = 3;</code>
+     * <code>optional string msg = 4;</code>
      * @return The msg.
      */
     java.lang.String getMsg();
     /**
-     * <code>optional string msg = 3;</code>
+     * <code>optional string msg = 4;</code>
      * @return The bytes for msg.
      */
     com.google.protobuf.ByteString
@@ -105,17 +116,22 @@ public final class ImMessageProto {
               break;
             case 8: {
               bitField0_ |= 0x00000001;
-              fromId_ = input.readInt64();
+              type_ = input.readInt32();
               break;
             }
             case 16: {
               bitField0_ |= 0x00000002;
-              type_ = input.readInt32();
+              fromId_ = input.readInt64();
               break;
             }
-            case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+            case 24: {
               bitField0_ |= 0x00000004;
+              toId_ = input.readInt64();
+              break;
+            }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
               msg_ = bs;
               break;
             }
@@ -152,37 +168,18 @@ public final class ImMessageProto {
     }
 
     private int bitField0_;
-    public static final int FROMID_FIELD_NUMBER = 1;
-    private long fromId_;
-    /**
-     * <code>required int64 fromId = 1;</code>
-     * @return Whether the fromId field is set.
-     */
-    @java.lang.Override
-    public boolean hasFromId() {
-      return ((bitField0_ & 0x00000001) != 0);
-    }
-    /**
-     * <code>required int64 fromId = 1;</code>
-     * @return The fromId.
-     */
-    @java.lang.Override
-    public long getFromId() {
-      return fromId_;
-    }
-
-    public static final int TYPE_FIELD_NUMBER = 2;
+    public static final int TYPE_FIELD_NUMBER = 1;
     private int type_;
     /**
-     * <code>required int32 type = 2;</code>
+     * <code>required int32 type = 1;</code>
      * @return Whether the type field is set.
      */
     @java.lang.Override
     public boolean hasType() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
-     * <code>required int32 type = 2;</code>
+     * <code>required int32 type = 1;</code>
      * @return The type.
      */
     @java.lang.Override
@@ -190,18 +187,56 @@ public final class ImMessageProto {
       return type_;
     }
 
-    public static final int MSG_FIELD_NUMBER = 3;
+    public static final int FROMID_FIELD_NUMBER = 2;
+    private long fromId_;
+    /**
+     * <code>required int64 fromId = 2;</code>
+     * @return Whether the fromId field is set.
+     */
+    @java.lang.Override
+    public boolean hasFromId() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <code>required int64 fromId = 2;</code>
+     * @return The fromId.
+     */
+    @java.lang.Override
+    public long getFromId() {
+      return fromId_;
+    }
+
+    public static final int TOID_FIELD_NUMBER = 3;
+    private long toId_;
+    /**
+     * <code>optional int64 toId = 3;</code>
+     * @return Whether the toId field is set.
+     */
+    @java.lang.Override
+    public boolean hasToId() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <code>optional int64 toId = 3;</code>
+     * @return The toId.
+     */
+    @java.lang.Override
+    public long getToId() {
+      return toId_;
+    }
+
+    public static final int MSG_FIELD_NUMBER = 4;
     private volatile java.lang.Object msg_;
     /**
-     * <code>optional string msg = 3;</code>
+     * <code>optional string msg = 4;</code>
      * @return Whether the msg field is set.
      */
     @java.lang.Override
     public boolean hasMsg() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000008) != 0);
     }
     /**
-     * <code>optional string msg = 3;</code>
+     * <code>optional string msg = 4;</code>
      * @return The msg.
      */
     @java.lang.Override
@@ -220,7 +255,7 @@ public final class ImMessageProto {
       }
     }
     /**
-     * <code>optional string msg = 3;</code>
+     * <code>optional string msg = 4;</code>
      * @return The bytes for msg.
      */
     @java.lang.Override
@@ -245,11 +280,11 @@ public final class ImMessageProto {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
-      if (!hasFromId()) {
+      if (!hasType()) {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasType()) {
+      if (!hasFromId()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -261,13 +296,16 @@ public final class ImMessageProto {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
             throws java.io.IOException {
       if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeInt64(1, fromId_);
+        output.writeInt32(1, type_);
       }
       if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeInt32(2, type_);
+        output.writeInt64(2, fromId_);
       }
       if (((bitField0_ & 0x00000004) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, msg_);
+        output.writeInt64(3, toId_);
+      }
+      if (((bitField0_ & 0x00000008) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, msg_);
       }
       unknownFields.writeTo(output);
     }
@@ -280,14 +318,18 @@ public final class ImMessageProto {
       size = 0;
       if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-                .computeInt64Size(1, fromId_);
+                .computeInt32Size(1, type_);
       }
       if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-                .computeInt32Size(2, type_);
+                .computeInt64Size(2, fromId_);
       }
       if (((bitField0_ & 0x00000004) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, msg_);
+        size += com.google.protobuf.CodedOutputStream
+                .computeInt64Size(3, toId_);
+      }
+      if (((bitField0_ & 0x00000008) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, msg_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -304,15 +346,20 @@ public final class ImMessageProto {
       }
       ImMessageProto.ImMessage other = (ImMessageProto.ImMessage) obj;
 
+      if (hasType() != other.hasType()) return false;
+      if (hasType()) {
+        if (getType()
+                != other.getType()) return false;
+      }
       if (hasFromId() != other.hasFromId()) return false;
       if (hasFromId()) {
         if (getFromId()
                 != other.getFromId()) return false;
       }
-      if (hasType() != other.hasType()) return false;
-      if (hasType()) {
-        if (getType()
-                != other.getType()) return false;
+      if (hasToId() != other.hasToId()) return false;
+      if (hasToId()) {
+        if (getToId()
+                != other.getToId()) return false;
       }
       if (hasMsg() != other.hasMsg()) return false;
       if (hasMsg()) {
@@ -330,14 +377,19 @@ public final class ImMessageProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasType()) {
+        hash = (37 * hash) + TYPE_FIELD_NUMBER;
+        hash = (53 * hash) + getType();
+      }
       if (hasFromId()) {
         hash = (37 * hash) + FROMID_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
                 getFromId());
       }
-      if (hasType()) {
-        hash = (37 * hash) + TYPE_FIELD_NUMBER;
-        hash = (53 * hash) + getType();
+      if (hasToId()) {
+        hash = (37 * hash) + TOID_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+                getToId());
       }
       if (hasMsg()) {
         hash = (37 * hash) + MSG_FIELD_NUMBER;
@@ -476,12 +528,14 @@ public final class ImMessageProto {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        fromId_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00000001);
         type_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        fromId_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000002);
-        msg_ = "";
+        toId_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000004);
+        msg_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -511,15 +565,19 @@ public final class ImMessageProto {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.fromId_ = fromId_;
+          result.type_ = type_;
           to_bitField0_ |= 0x00000001;
         }
         if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.type_ = type_;
+          result.fromId_ = fromId_;
           to_bitField0_ |= 0x00000002;
         }
         if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.toId_ = toId_;
           to_bitField0_ |= 0x00000004;
+        }
+        if (((from_bitField0_ & 0x00000008) != 0)) {
+          to_bitField0_ |= 0x00000008;
         }
         result.msg_ = msg_;
         result.bitField0_ = to_bitField0_;
@@ -571,14 +629,17 @@ public final class ImMessageProto {
 
       public Builder mergeFrom(ImMessageProto.ImMessage other) {
         if (other == ImMessageProto.ImMessage.getDefaultInstance()) return this;
-        if (other.hasFromId()) {
-          setFromId(other.getFromId());
-        }
         if (other.hasType()) {
           setType(other.getType());
         }
+        if (other.hasFromId()) {
+          setFromId(other.getFromId());
+        }
+        if (other.hasToId()) {
+          setToId(other.getToId());
+        }
         if (other.hasMsg()) {
-          bitField0_ |= 0x00000004;
+          bitField0_ |= 0x00000008;
           msg_ = other.msg_;
           onChanged();
         }
@@ -589,10 +650,10 @@ public final class ImMessageProto {
 
       @java.lang.Override
       public final boolean isInitialized() {
-        if (!hasFromId()) {
+        if (!hasType()) {
           return false;
         }
-        if (!hasType()) {
+        if (!hasFromId()) {
           return false;
         }
         return true;
@@ -618,56 +679,17 @@ public final class ImMessageProto {
       }
       private int bitField0_;
 
-      private long fromId_ ;
-      /**
-       * <code>required int64 fromId = 1;</code>
-       * @return Whether the fromId field is set.
-       */
-      @java.lang.Override
-      public boolean hasFromId() {
-        return ((bitField0_ & 0x00000001) != 0);
-      }
-      /**
-       * <code>required int64 fromId = 1;</code>
-       * @return The fromId.
-       */
-      @java.lang.Override
-      public long getFromId() {
-        return fromId_;
-      }
-      /**
-       * <code>required int64 fromId = 1;</code>
-       * @param value The fromId to set.
-       * @return This builder for chaining.
-       */
-      public Builder setFromId(long value) {
-        bitField0_ |= 0x00000001;
-        fromId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required int64 fromId = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearFromId() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        fromId_ = 0L;
-        onChanged();
-        return this;
-      }
-
       private int type_ ;
       /**
-       * <code>required int32 type = 2;</code>
+       * <code>required int32 type = 1;</code>
        * @return Whether the type field is set.
        */
       @java.lang.Override
       public boolean hasType() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
-       * <code>required int32 type = 2;</code>
+       * <code>required int32 type = 1;</code>
        * @return The type.
        */
       @java.lang.Override
@@ -675,37 +697,115 @@ public final class ImMessageProto {
         return type_;
       }
       /**
-       * <code>required int32 type = 2;</code>
+       * <code>required int32 type = 1;</code>
        * @param value The type to set.
        * @return This builder for chaining.
        */
       public Builder setType(int value) {
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000001;
         type_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required int32 type = 2;</code>
+       * <code>required int32 type = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearType() {
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         type_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private long fromId_ ;
+      /**
+       * <code>required int64 fromId = 2;</code>
+       * @return Whether the fromId field is set.
+       */
+      @java.lang.Override
+      public boolean hasFromId() {
+        return ((bitField0_ & 0x00000002) != 0);
+      }
+      /**
+       * <code>required int64 fromId = 2;</code>
+       * @return The fromId.
+       */
+      @java.lang.Override
+      public long getFromId() {
+        return fromId_;
+      }
+      /**
+       * <code>required int64 fromId = 2;</code>
+       * @param value The fromId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setFromId(long value) {
+        bitField0_ |= 0x00000002;
+        fromId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int64 fromId = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearFromId() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        fromId_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long toId_ ;
+      /**
+       * <code>optional int64 toId = 3;</code>
+       * @return Whether the toId field is set.
+       */
+      @java.lang.Override
+      public boolean hasToId() {
+        return ((bitField0_ & 0x00000004) != 0);
+      }
+      /**
+       * <code>optional int64 toId = 3;</code>
+       * @return The toId.
+       */
+      @java.lang.Override
+      public long getToId() {
+        return toId_;
+      }
+      /**
+       * <code>optional int64 toId = 3;</code>
+       * @param value The toId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setToId(long value) {
+        bitField0_ |= 0x00000004;
+        toId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 toId = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearToId() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        toId_ = 0L;
         onChanged();
         return this;
       }
 
       private java.lang.Object msg_ = "";
       /**
-       * <code>optional string msg = 3;</code>
+       * <code>optional string msg = 4;</code>
        * @return Whether the msg field is set.
        */
       public boolean hasMsg() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000008) != 0);
       }
       /**
-       * <code>optional string msg = 3;</code>
+       * <code>optional string msg = 4;</code>
        * @return The msg.
        */
       public java.lang.String getMsg() {
@@ -723,7 +823,7 @@ public final class ImMessageProto {
         }
       }
       /**
-       * <code>optional string msg = 3;</code>
+       * <code>optional string msg = 4;</code>
        * @return The bytes for msg.
        */
       public com.google.protobuf.ByteString
@@ -740,7 +840,7 @@ public final class ImMessageProto {
         }
       }
       /**
-       * <code>optional string msg = 3;</code>
+       * <code>optional string msg = 4;</code>
        * @param value The msg to set.
        * @return This builder for chaining.
        */
@@ -749,23 +849,23 @@ public final class ImMessageProto {
         if (value == null) {
           throw new NullPointerException();
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         msg_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string msg = 3;</code>
+       * <code>optional string msg = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearMsg() {
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         msg_ = getDefaultInstance().getMsg();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string msg = 3;</code>
+       * <code>optional string msg = 4;</code>
        * @param value The bytes for msg to set.
        * @return This builder for chaining.
        */
@@ -774,7 +874,7 @@ public final class ImMessageProto {
         if (value == null) {
           throw new NullPointerException();
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         msg_ = value;
         onChanged();
         return this;
@@ -846,8 +946,9 @@ public final class ImMessageProto {
           descriptor;
   static {
     java.lang.String[] descriptorData = {
-            "\n\024ImMessageProto.proto\"6\n\tImMessage\022\016\n\006f" +
-                    "romId\030\001 \002(\003\022\014\n\004type\030\002 \002(\005\022\013\n\003msg\030\003 \001(\t"
+            "\n\024ImMessageProto.proto\"D\n\tImMessage\022\014\n\004t" +
+                    "ype\030\001 \002(\005\022\016\n\006fromId\030\002 \002(\003\022\014\n\004toId\030\003 \001(\003\022" +
+                    "\013\n\003msg\030\004 \001(\t"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
             .internalBuildGeneratedFileFrom(descriptorData,
@@ -858,7 +959,7 @@ public final class ImMessageProto {
     internal_static_ImMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_ImMessage_descriptor,
-            new java.lang.String[] { "FromId", "Type", "Msg", });
+            new java.lang.String[] { "Type", "FromId", "ToId", "Msg", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

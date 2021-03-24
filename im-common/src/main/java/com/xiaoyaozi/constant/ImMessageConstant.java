@@ -7,4 +7,5 @@ package com.xiaoyaozi.constant;
  * createTime: 2021-03-20 23:14
  */
 public interface ImMessageConstant {
+
 }

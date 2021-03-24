@@ -4,6 +4,7 @@ import com.xiaoyaozi.enums.ImMessageType;
 import com.xiaoyaozi.protocol.ImMessageProto;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -18,25 +19,27 @@ import lombok.extern.slf4j.Slf4j;
 public class ImServerHandle extends SimpleChannelInboundHandler<ImMessageProto.ImMessage> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, ImMessageProto.ImMessage imMessage) throws Exception {
-        if (imMessage.getType() == ImMessageType.CONNECT.getType()) {
-            System.out.println(imMessage.getFromId());
-            System.out.println(imMessage.getMsg());
-        } else if (imMessage.getType() == ImMessageType.PING.getType()) {
-
-        } else if (imMessage.getType() == ImMessageType.MESSAGE.getType()) {
-
+    protected void channelRead0(ChannelHandlerContext ctx, ImMessageProto.ImMessage message) throws Exception {
+        if (message.getType() == ImMessageType.CONNECT.getType()) {
+            ImServerChannelManage.disposeConnectMessage(message.getFromId(), (NioSocketChannel) ctx.channel());
+            log.info("客户端用户id：{}，成功连接服务器", message.getFromId());
+        } else if (message.getType() == ImMessageType.PING.getType()) {
+            log.info("收到客户端心跳，消息来源：{}", message.getFromId());
+            ImServerChannelManage.disposePingMessage((NioSocketChannel) ctx.channel());
+        } else if (message.getType() == ImMessageType.MESSAGE.getType()) {
+            log.info("收到客户端新消息，消息来源：{}，消息内容是：{}", message.getFromId(), message.getMsg());
+            ImServerChannelManage.disposeNormalMessage((NioSocketChannel) ctx.channel(), message);
         } else {
-            log.warn("收到未知类型的消息，type: {}, fromId: {}, message: {}", imMessage.getType(), imMessage.getFromId(), imMessage.getMsg());
+            log.warn("收到未知类型的消息，type: {}, fromId: {}, message: {}", message.getType(), message.getFromId(), message.getMsg());
         } 
     }
 
     /**
-     * 用户端心跳丢失
+     * channel失活
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        super.channelInactive(ctx);
+        ImServerChannelManage.disposeChannelInactive((NioSocketChannel) ctx.channel());
     }
 
     @Override
@@ -44,7 +47,7 @@ public class ImServerHandle extends SimpleChannelInboundHandler<ImMessageProto.I
         if (ctx instanceof IdleStateEvent) {
             IdleState state = ((IdleStateEvent) ctx).state();
             if (state == IdleState.READER_IDLE) {
-
+                ImServerChannelManage.disposePingTimeoutEvent((NioSocketChannel) ctx.channel());
             }
         } else {
             super.userEventTriggered(ctx, evt);

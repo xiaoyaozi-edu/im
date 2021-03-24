@@ -18,7 +18,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * tip:
+ * tip: server端websocket配置
  *
  * @author xiaoyaozi
  * createTime: 2021-03-22 17:39
@@ -26,6 +26,11 @@ import java.net.UnknownHostException;
 @Slf4j
 @Configuration
 public class NettyConfig implements InitializingBean {
+
+    /**
+     * 服务端 ip + port 地址
+     */
+    public static String HOST_PORT_ADDRESS;
 
     @Value("${zk.node.server}")
     private String zkServerNode;
@@ -54,8 +59,8 @@ public class NettyConfig implements InitializingBean {
     private void registerServerIpToZk() {
         try {
             String hostAddress = InetAddress.getLocalHost().getHostAddress();
-            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL)
-                    .forPath(String.format("%s/%s:%s", zkServerNode, hostAddress, imServerPort));
+            HOST_PORT_ADDRESS = hostAddress + ":" + imServerPort;
+            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(zkServerNode + "/" + HOST_PORT_ADDRESS);
         } catch (UnknownHostException e) {
             log.error("获取本机ip地址出错", e);
         } catch (Exception e) {

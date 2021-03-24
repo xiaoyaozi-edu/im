@@ -20,7 +20,7 @@ public class ImServerInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         socketChannel.pipeline()
-                .addLast(new IdleStateHandler(10, 0, 0))
+                .addLast(new IdleStateHandler(11, 0, 0))
                 .addLast(new ProtobufVarint32FrameDecoder())
                 .addLast(new ProtobufDecoder(ImMessageProto.ImMessage.getDefaultInstance()))
                 .addLast(new ProtobufVarint32LengthFieldPrepender())

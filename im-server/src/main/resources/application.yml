@@ -17,3 +17,18 @@ im:
   server:
     # websocket监听端口
     port: 10010
+  ping:
+    # 30000ms没有收到客户端心跳，关闭channel
+    timeout: 30000
+
+spring:
+  redis:
+    host: 112.74.171.15
+    port: 6379
+    password: root
+    jedis:
+      pool:
+        max-active: 100
+        max-idle: 100
+        max-wait: 1000
+        min-idle: 10
