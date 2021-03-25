@@ -1,6 +1,7 @@
-package com.xiaoyaozi.server;
+package com.xiaoyaozi.handle;
 
 import com.xiaoyaozi.enums.ImMessageType;
+import com.xiaoyaozi.manage.ImServerChannelManage;
 import com.xiaoyaozi.protocol.ImMessageProto;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -20,9 +21,12 @@ public class ImServerHandle extends SimpleChannelInboundHandler<ImMessageProto.I
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ImMessageProto.ImMessage message) throws Exception {
-        if (message.getType() == ImMessageType.CONNECT.getType()) {
-            ImServerChannelManage.disposeConnectMessage(message.getFromId(), (NioSocketChannel) ctx.channel());
+        if (message.getType() == ImMessageType.CLIENT_CONNECT.getType()) {
             log.info("客户端用户id：{}，成功连接服务器", message.getFromId());
+            ImServerChannelManage.disposeClientConnectMessage(message.getFromId(), (NioSocketChannel) ctx.channel());
+        } else if (message.getType() == ImMessageType.SERVER_CONNECT.getType()) {
+            log.info("服务端ip地址：{}，成功连接服务器", message.getFromId());
+            ImServerChannelManage.disposeServerConnectMessage(message.getFromId(), (NioSocketChannel) ctx.channel());
         } else if (message.getType() == ImMessageType.PING.getType()) {
             log.info("收到客户端心跳，消息来源：{}", message.getFromId());
             ImServerChannelManage.disposePingMessage((NioSocketChannel) ctx.channel());

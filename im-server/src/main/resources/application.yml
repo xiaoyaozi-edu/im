@@ -1,6 +1,3 @@
-route:
-  type: loop
-
 zk:
   # zk地址
   address: 112.74.171.15:2181
@@ -16,10 +13,13 @@ zk:
 im:
   server:
     # websocket监听端口
-    port: 10010
+    port: 10011
   ping:
     # 30000ms没有收到客户端心跳，关闭channel
     timeout: 30000
+    # 重连次数
+  reconnect:
+    max-count: 3
 
 spring:
   redis:

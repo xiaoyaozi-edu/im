@@ -25,7 +25,7 @@ public abstract class RouteStrategy {
     public RouteStrategy(CuratorFramework zkClient, String zkServerNode) {
         this.zkClient = zkClient;
         this.zkServerNode = zkServerNode;
-        watcher = watchedEvent -> updateServerIpList();
+        this.watcher = watchedEvent -> updateServerIpList();
         // 启动时先更新一次节点
         updateServerIpList();
     }

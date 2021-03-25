@@ -1,6 +1,6 @@
 package com.xiaoyaozi.config;
 
-import com.xiaoyaozi.server.ImServerInitializer;
+import com.xiaoyaozi.handle.ImServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -38,13 +38,13 @@ public class NettyConfig implements InitializingBean {
     private Integer imServerPort;
 
     @Autowired
-    private CuratorFramework client;
+    private CuratorFramework zkClient;
 
     @Override
     public void afterPropertiesSet() throws Exception {
         ServerBootstrap serverBootstrap = new ServerBootstrap()
                 .group(new NioEventLoopGroup(1, new DefaultThreadFactory("boss")),
-                        new NioEventLoopGroup(0, new DefaultThreadFactory("work-server")))
+                        new NioEventLoopGroup(0, new DefaultThreadFactory("work-connect-client")))
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new ImServerInitializer());
         ChannelFuture future = serverBootstrap.bind(imServerPort).sync();
@@ -56,11 +56,17 @@ public class NettyConfig implements InitializingBean {
         }
     }
 
+    /**
+     * tip: 注册ip到zk节点
+     *
+     * @author xiaoyaozi
+     * createTime: 2021-03-25 09:48
+     */
     private void registerServerIpToZk() {
         try {
             String hostAddress = InetAddress.getLocalHost().getHostAddress();
             HOST_PORT_ADDRESS = hostAddress + ":" + imServerPort;
-            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(zkServerNode + "/" + HOST_PORT_ADDRESS);
+            zkClient.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(zkServerNode + "/" + HOST_PORT_ADDRESS);
         } catch (UnknownHostException e) {
             log.error("获取本机ip地址出错", e);
         } catch (Exception e) {

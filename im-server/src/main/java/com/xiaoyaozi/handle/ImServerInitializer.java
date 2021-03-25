@@ -1,4 +1,4 @@
-package com.xiaoyaozi.server;
+package com.xiaoyaozi.handle;
 
 import com.xiaoyaozi.protocol.ImMessageProto;
 import io.netty.channel.ChannelInitializer;

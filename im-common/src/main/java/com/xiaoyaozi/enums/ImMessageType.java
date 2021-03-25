@@ -11,9 +11,10 @@ public enum ImMessageType {
     /**
      * 消息类型：连接、心跳、消息
      */
-    CONNECT(1, "连接"),
-    PING(2, "心跳"),
-    MESSAGE(3, "消息");
+    CLIENT_CONNECT(1, "C-S"),
+    SERVER_CONNECT(2, "S-S"),
+    PING(3, "心跳"),
+    MESSAGE(4, "消息");
 
     private final int type;
     private final String msg;

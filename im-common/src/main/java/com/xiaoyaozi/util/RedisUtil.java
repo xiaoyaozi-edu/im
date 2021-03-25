@@ -69,7 +69,7 @@ public class RedisUtil {
         if (result == null) {
             return null;
         }
-        return Long.valueOf(String.valueOf(result));
+        return Long.valueOf(result.toString());
     }
 
     public static  <T> T loadModelFromRedis(String key, Class<T> clazz) {

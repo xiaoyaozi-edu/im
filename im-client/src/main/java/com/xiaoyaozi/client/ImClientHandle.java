@@ -1,6 +1,7 @@
 package com.xiaoyaozi.client;
 
 import com.xiaoyaozi.enums.ImMessageType;
+import com.xiaoyaozi.manage.ImClientReconnectManage;
 import com.xiaoyaozi.protocol.ImMessageProto;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -26,13 +27,9 @@ public class ImClientHandle extends SimpleChannelInboundHandler<ImMessageProto.I
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        super.channelActive(ctx);
-    }
-
-    @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        super.channelInactive(ctx);
+        ImClientReconnectManage.appendReconnectTask();
+        ctx.channel().close();
     }
 
     /**
