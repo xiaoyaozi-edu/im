@@ -1,8 +1,10 @@
-package com.xiaoyaozi.client;
+package com.xiaoyaozi.handle;
 
 import com.xiaoyaozi.enums.ImMessageType;
-import com.xiaoyaozi.manage.ImClientReconnectManage;
+import com.xiaoyaozi.manage.ImServerChannelManage;
+import com.xiaoyaozi.manage.ImServerReconnectManage;
 import com.xiaoyaozi.protocol.ImMessageProto;
+import com.xiaoyaozi.server.MetaspaceConstant;
 import com.xiaoyaozi.util.ImPingUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -25,11 +27,12 @@ public class ImClientHandle extends SimpleChannelInboundHandler<ImMessageProto.I
         if (message.getType() == ImMessageType.MESSAGE.getType()) {
             log.info("收到新消息，消息来源：{}，消息内容是：{}", message.getFromId(), message.getMsg());
         }
+        log.info("{}", message.getType());
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        ImClientReconnectManage.appendReconnectTask();
+        ImServerReconnectManage.appendReconnectTask(ctx.channel().attr(ImServerChannelManage.USERID_INFO).get());
         ctx.channel().close();
     }
 
@@ -41,7 +44,7 @@ public class ImClientHandle extends SimpleChannelInboundHandler<ImMessageProto.I
         if (evt instanceof IdleStateEvent) {
             IdleState state = ((IdleStateEvent) evt).state();
             if (state == IdleState.WRITER_IDLE) {
-                log.info("[c-s] 即将发送心跳");
+                log.info("[s-s] 即将发送心跳，其中目标serverIp: {}", MetaspaceConstant.HOST_PORT_ADDRESS);
                 ImPingUtil.sendPingMessage((NioSocketChannel) ctx.channel());
             }
         } else {

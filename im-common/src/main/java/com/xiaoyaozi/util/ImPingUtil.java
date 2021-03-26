@@ -1,17 +1,19 @@
-package com.xiaoyaozi.client;
+package com.xiaoyaozi.util;
 
+import com.xiaoyaozi.enums.ImMessageType;
 import com.xiaoyaozi.protocol.ImMessageProto;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
- * tip:
+ * tip: im心跳工具
  *
  * @author xiaoyaozi
- * createTime: 2021-03-24 17:41
+ * createTime: 2021-03-26 14:13
  */
-public class ImClientChannelManage {
+public class ImPingUtil {
 
-    public static ImMessageProto.ImMessage PING_MESSAGE;
+    private static final ImMessageProto.ImMessage PING_MESSAGE = ImMessageProto.ImMessage.newBuilder().setFromId("0")
+            .setType(ImMessageType.PING.getType()).build();
 
     /**
      * tip: 发送心跳包

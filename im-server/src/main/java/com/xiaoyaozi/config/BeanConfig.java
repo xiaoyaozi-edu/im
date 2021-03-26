@@ -1,10 +1,11 @@
 package com.xiaoyaozi.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -17,23 +18,20 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author xiaoyaozi
  * createTime: 2021-03-22 16:31
  */
+@Slf4j
 @Configuration
 public class BeanConfig {
 
-    @Value("${zk.address}")
-    private String zkAddress;
-    @Value("${zk.timeout.connect}")
-    private int connectTimeout;
-    @Value("${zk.timeout.session}")
-    private int sessionTimeout;
+    @Autowired
+    private ImServerConfig serverConfig;
 
     @Bean
-    public CuratorFramework client() {
+    public CuratorFramework zkClient() {
         // ExponentialBackoffRetry 重试策略 间隔时间是2的指数增长，比如第一次等待1s，第二次2s，第三次4s。。。
         CuratorFramework client = CuratorFrameworkFactory.builder()
-                .connectString(zkAddress)
-                .connectionTimeoutMs(connectTimeout)
-                .sessionTimeoutMs(sessionTimeout)
+                .connectString(serverConfig.getZkAddress())
+                .connectionTimeoutMs(serverConfig.getConnectTimeout())
+                .sessionTimeoutMs(serverConfig.getSessionTimeout())
                 .retryPolicy(new ExponentialBackoffRetry(1000, 5))
                 .build();
         client.start();

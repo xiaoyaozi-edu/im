@@ -1,5 +1,6 @@
 package com.xiaoyaozi.route;
 
+import com.xiaoyaozi.config.ImRouteConfig;
 import org.apache.curator.framework.CuratorFramework;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -19,8 +20,8 @@ public class LoopRouteStrategy extends RouteStrategy {
     private final AtomicLong count = new AtomicLong();
     private boolean isPowerOfTwo;
 
-    public LoopRouteStrategy(CuratorFramework zkClient, String zkServerNode) {
-        super(zkClient, zkServerNode);
+    public LoopRouteStrategy(CuratorFramework zkClient, ImRouteConfig routeConfig) {
+        super(zkClient, routeConfig.getZkServerNode());
     }
 
     @Override

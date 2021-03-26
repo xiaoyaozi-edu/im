@@ -1,21 +1,17 @@
 package com.xiaoyaozi.manage;
 
-import com.xiaoyaozi.config.NettyConfig;
+import com.xiaoyaozi.config.ImServerConfig;
 import com.xiaoyaozi.constant.RedisConstant;
 import com.xiaoyaozi.enums.ImMessageType;
-import com.xiaoyaozi.handle.ImClientInitializer;
 import com.xiaoyaozi.protocol.ImMessageProto;
+import com.xiaoyaozi.server.MetaspaceConstant;
 import com.xiaoyaozi.util.RedisUtil;
-import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
+import com.xiaoyaozi.util.SpringUtil;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.AttributeKey;
-import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -28,13 +24,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * createTime: 2021-03-24 09:42
  */
 @Slf4j
-@Component
 public class ImServerChannelManage {
 
     /**
      * 保存所有 C-S 的socket连接
      */
-    private static final Map<String, NioSocketChannel> CLIENT_CHANNEL_MAP = new ConcurrentHashMap<>(16);
+    public static final Map<String, NioSocketChannel> CLIENT_CHANNEL_MAP = new ConcurrentHashMap<>(16);
     /**
      * 保存所有 S-S 的socket连接
      */
@@ -46,12 +41,9 @@ public class ImServerChannelManage {
     /**
      * channel绑定的userId信息
      */
-    private static final AttributeKey<String> USERID_INFO = AttributeKey.valueOf("userId");
-    /**
-     * 心跳最长超时
-     */
-    public static Integer PING_TIMEOUT;
+    public static final AttributeKey<String> USERID_INFO = AttributeKey.valueOf("userId");
 
+    private static final ImServerConfig SERVER_CONFIG = SpringUtil.getBean(ImServerConfig.class);
     /**
      * tip: 处理 C-S 信息
      *
@@ -62,9 +54,17 @@ public class ImServerChannelManage {
      */
     public static void disposeClientConnectMessage(String userId, NioSocketChannel channel) {
         updateRecentlyPingTime(channel);
+        // 关闭旧channel
+        NioSocketChannel oldChannel = CLIENT_CHANNEL_MAP.get(userId);
+        if (oldChannel != null) {
+            oldChannel.close();
+        }
+        // 绑定userId
         channel.attr(USERID_INFO).set(userId);
+        // 更新map
         CLIENT_CHANNEL_MAP.put(userId, channel);
-        RedisUtil.set(RedisConstant.ROUTE_PREFIX + userId, NettyConfig.HOST_PORT_ADDRESS);
+        // 加入缓存
+        RedisUtil.set(RedisConstant.ROUTE_PREFIX + userId, MetaspaceConstant.HOST_PORT_ADDRESS);
     }
 
     /**
@@ -77,7 +77,14 @@ public class ImServerChannelManage {
      */
     public static void disposeServerConnectMessage(String serverIp, NioSocketChannel channel) {
         updateRecentlyPingTime(channel);
+        // 关闭旧channel
+        NioSocketChannel oldChannel = SERVER_CHANNEL_MAP.get(serverIp);
+        if (oldChannel != null) {
+            oldChannel.close();
+        }
+        // 绑定serverIp
         channel.attr(USERID_INFO).set(serverIp);
+        // 更新map
         SERVER_CHANNEL_MAP.put(serverIp, channel);
     }
 
@@ -119,7 +126,7 @@ public class ImServerChannelManage {
                         .setFromId("0").setMsg("用户未上线，延迟推送").build());
             } else {
                 // 缓存存在，查询本地serverMap
-                NioSocketChannel toServerIpChannel = CLIENT_CHANNEL_MAP.get(serverIp);
+                NioSocketChannel toServerIpChannel = SERVER_CHANNEL_MAP.get(serverIp);
                 if (toServerIpChannel != null) {
                     toServerIpChannel.writeAndFlush(imMessage);
                 } else {
@@ -140,7 +147,7 @@ public class ImServerChannelManage {
      */
     public static void disposePingTimeoutEvent(NioSocketChannel channel) {
         long recentlyPingTime = Long.parseLong(channel.attr(RECENTLY_PING_TIME).get());
-        if (System.currentTimeMillis() - recentlyPingTime > PING_TIMEOUT) {
+        if (System.currentTimeMillis() - recentlyPingTime > SERVER_CONFIG.getPingTimeout()) {
             log.warn("客户端心跳超时，即将关闭连接，用户id: {}", channel.attr(USERID_INFO).get());
             clientOffline(channel);
         }
@@ -167,7 +174,7 @@ public class ImServerChannelManage {
     private static void clientOffline(NioSocketChannel channel) {
         String userId = channel.attr(USERID_INFO).get();
         // 这里userId偶现null，加一个判断
-        if (StringUtils.isNotEmpty(userId)) {
+//        if (StringUtils.isNotEmpty(userId)) {
             CLIENT_CHANNEL_MAP.remove(userId);
             SERVER_CHANNEL_MAP.remove(userId);
             RedisUtil.delete(RedisConstant.ROUTE_PREFIX + userId);
@@ -177,7 +184,7 @@ public class ImServerChannelManage {
             } else {
                 log.error("客户端用户id：{}，下线服务器时，关闭channel出现错误", userId, future.cause());
             }
-        }
+//        }
     }
 
     /**
@@ -200,7 +207,7 @@ public class ImServerChannelManage {
      */
     public static void updateServerSocketConnect(List<String> serverIpList) {
         for (String serverIp : serverIpList) {
-            if (!serverIp.equals(NettyConfig.HOST_PORT_ADDRESS) && !SERVER_CHANNEL_MAP.containsKey(serverIp) ) {
+            if (!serverIp.equals(MetaspaceConstant.HOST_PORT_ADDRESS) && !SERVER_CHANNEL_MAP.containsKey(serverIp) ) {
                 // 创建连接--这里使用任务的方式进行连接
                 ImServerReconnectManage.appendReconnectTask(serverIp);
             }

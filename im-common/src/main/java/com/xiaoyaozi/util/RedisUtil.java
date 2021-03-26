@@ -24,6 +24,10 @@ public class RedisUtil {
         REDIS_TEMPLATE.delete(key);
     }
 
+    public static Long deleteList(Collection<String> key) {
+        return REDIS_TEMPLATE.delete(key);
+    }
+
     public static void set(String key, Object value) {
         REDIS_TEMPLATE.opsForValue().set(key, value);
     }
