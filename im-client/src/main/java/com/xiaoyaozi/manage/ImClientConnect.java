@@ -8,6 +8,7 @@ import com.xiaoyaozi.client.ImClientInitializer;
 import com.xiaoyaozi.config.ImClientConfig;
 import com.xiaoyaozi.enums.ImMessageType;
 import com.xiaoyaozi.protocol.ImMessageProto;
+import com.xiaoyaozi.util.ImMessageIdUtil;
 import com.xiaoyaozi.util.SpringUtil;
 import com.xiaoyaozi.vo.LoginInfoReq;
 import com.xiaoyaozi.vo.LoginInfoResp;
@@ -83,9 +84,8 @@ public class ImClientConnect {
                 .channel(NioSocketChannel.class)
                 .handler(new ImClientInitializer());
         String[] ipInfo = loginInfo.getServerIp().split(":");
-        ChannelFuture future;
         try {
-            future = bootstrap.connect(ipInfo[0], Integer.parseInt(ipInfo[1])).sync();
+            ChannelFuture future = bootstrap.connect(ipInfo[0], Integer.parseInt(ipInfo[1])).sync();
             if (future.isSuccess()) {
                 log.info("客户端启动成功");
                 channel = future.channel();
@@ -100,8 +100,8 @@ public class ImClientConnect {
                 while (true) {
                     String msg = sc.nextLine();
                     String[] split = msg.split(";");
-                    ImMessageProto.ImMessage messageProto = ImMessageProto.ImMessage.newBuilder().setType(ImMessageType.MESSAGE.getType())
-                            .setFromId(userId.toString()).setToId(split[0]).setMsg(split[1]).build();
+                    ImMessageProto.ImMessage messageProto = ImMessageProto.ImMessage.newBuilder().setType(ImMessageType.NORMAL_MESSAGE.getType())
+                            .setFromId(userId.toString()).setToId(split[0]).setMessageId(ImMessageIdUtil.generate(1L)).setMsg(split[1]).build();
                     channel.writeAndFlush(messageProto);
                 }
             }

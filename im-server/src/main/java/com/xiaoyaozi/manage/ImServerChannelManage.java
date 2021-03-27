@@ -113,6 +113,8 @@ public class ImServerChannelManage {
             log.error("客户端消息toId丢失，请检查，其中fromId: {}", imMessage.getFromId());
             return;
         }
+        // 保存到本地
+//        channel.writeAndFlush(ImMessageProto.ImMessage.newBuilder().set)
         // 先查询本地
         NioSocketChannel toIdChannel = CLIENT_CHANNEL_MAP.get(toId);
         if (toIdChannel != null) {
@@ -122,7 +124,7 @@ public class ImServerChannelManage {
             String serverIp = RedisUtil.get(RedisConstant.ROUTE_PREFIX + toId);
             if (StringUtils.isEmpty(serverIp)) {
                 // 缓存不存在，用户未上线
-                channel.writeAndFlush(ImMessageProto.ImMessage.newBuilder().setType(ImMessageType.MESSAGE.getType())
+                channel.writeAndFlush(ImMessageProto.ImMessage.newBuilder().setType(ImMessageType.NORMAL_MESSAGE.getType())
                         .setFromId("0").setMsg("用户未上线，延迟推送").build());
             } else {
                 // 缓存存在，查询本地serverMap
@@ -131,7 +133,7 @@ public class ImServerChannelManage {
                     toServerIpChannel.writeAndFlush(imMessage);
                 } else {
                     // 本地不存在server，延迟推送
-                    channel.writeAndFlush(ImMessageProto.ImMessage.newBuilder().setType(ImMessageType.MESSAGE.getType())
+                    channel.writeAndFlush(ImMessageProto.ImMessage.newBuilder().setType(ImMessageType.NORMAL_MESSAGE.getType())
                             .setFromId("0").setMsg("用户未上线，延迟推送").build());
                 }
             }

@@ -24,7 +24,7 @@ public class ImClientHandle extends SimpleChannelInboundHandler<ImMessageProto.I
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ImMessageProto.ImMessage message) throws Exception {
-        if (message.getType() == ImMessageType.MESSAGE.getType()) {
+        if (message.getType() == ImMessageType.NORMAL_MESSAGE.getType()) {
             log.info("收到新消息，消息来源：{}，消息内容是：{}", message.getFromId(), message.getMsg());
         }
         log.info("{}", message.getType());

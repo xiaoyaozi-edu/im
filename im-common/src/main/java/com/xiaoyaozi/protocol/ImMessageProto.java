@@ -63,17 +63,34 @@ public final class ImMessageProto {
     getToIdBytes();
 
     /**
-     * <code>optional string msg = 4;</code>
+     * <code>optional string messageId = 4;</code>
+     * @return Whether the messageId field is set.
+     */
+    boolean hasMessageId();
+    /**
+     * <code>optional string messageId = 4;</code>
+     * @return The messageId.
+     */
+    java.lang.String getMessageId();
+    /**
+     * <code>optional string messageId = 4;</code>
+     * @return The bytes for messageId.
+     */
+    com.google.protobuf.ByteString
+    getMessageIdBytes();
+
+    /**
+     * <code>optional string msg = 5;</code>
      * @return Whether the msg field is set.
      */
     boolean hasMsg();
     /**
-     * <code>optional string msg = 4;</code>
+     * <code>optional string msg = 5;</code>
      * @return The msg.
      */
     java.lang.String getMsg();
     /**
-     * <code>optional string msg = 4;</code>
+     * <code>optional string msg = 5;</code>
      * @return The bytes for msg.
      */
     com.google.protobuf.ByteString
@@ -94,6 +111,7 @@ public final class ImMessageProto {
     private ImMessage() {
       fromId_ = "";
       toId_ = "";
+      messageId_ = "";
       msg_ = "";
     }
 
@@ -148,6 +166,12 @@ public final class ImMessageProto {
             case 34: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000008;
+              messageId_ = bs;
+              break;
+            }
+            case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000010;
               msg_ = bs;
               break;
             }
@@ -299,18 +323,66 @@ public final class ImMessageProto {
       }
     }
 
-    public static final int MSG_FIELD_NUMBER = 4;
+    public static final int MESSAGEID_FIELD_NUMBER = 4;
+    private volatile java.lang.Object messageId_;
+    /**
+     * <code>optional string messageId = 4;</code>
+     * @return Whether the messageId field is set.
+     */
+    @java.lang.Override
+    public boolean hasMessageId() {
+      return ((bitField0_ & 0x00000008) != 0);
+    }
+    /**
+     * <code>optional string messageId = 4;</code>
+     * @return The messageId.
+     */
+    @java.lang.Override
+    public java.lang.String getMessageId() {
+      java.lang.Object ref = messageId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          messageId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string messageId = 4;</code>
+     * @return The bytes for messageId.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+    getMessageIdBytes() {
+      java.lang.Object ref = messageId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
+        messageId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int MSG_FIELD_NUMBER = 5;
     private volatile java.lang.Object msg_;
     /**
-     * <code>optional string msg = 4;</code>
+     * <code>optional string msg = 5;</code>
      * @return Whether the msg field is set.
      */
     @java.lang.Override
     public boolean hasMsg() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000010) != 0);
     }
     /**
-     * <code>optional string msg = 4;</code>
+     * <code>optional string msg = 5;</code>
      * @return The msg.
      */
     @java.lang.Override
@@ -329,7 +401,7 @@ public final class ImMessageProto {
       }
     }
     /**
-     * <code>optional string msg = 4;</code>
+     * <code>optional string msg = 5;</code>
      * @return The bytes for msg.
      */
     @java.lang.Override
@@ -379,7 +451,10 @@ public final class ImMessageProto {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, toId_);
       }
       if (((bitField0_ & 0x00000008) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, msg_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, messageId_);
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, msg_);
       }
       unknownFields.writeTo(output);
     }
@@ -401,7 +476,10 @@ public final class ImMessageProto {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, toId_);
       }
       if (((bitField0_ & 0x00000008) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, msg_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, messageId_);
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, msg_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -433,6 +511,11 @@ public final class ImMessageProto {
         if (!getToId()
                 .equals(other.getToId())) return false;
       }
+      if (hasMessageId() != other.hasMessageId()) return false;
+      if (hasMessageId()) {
+        if (!getMessageId()
+                .equals(other.getMessageId())) return false;
+      }
       if (hasMsg() != other.hasMsg()) return false;
       if (hasMsg()) {
         if (!getMsg()
@@ -460,6 +543,10 @@ public final class ImMessageProto {
       if (hasToId()) {
         hash = (37 * hash) + TOID_FIELD_NUMBER;
         hash = (53 * hash) + getToId().hashCode();
+      }
+      if (hasMessageId()) {
+        hash = (37 * hash) + MESSAGEID_FIELD_NUMBER;
+        hash = (53 * hash) + getMessageId().hashCode();
       }
       if (hasMsg()) {
         hash = (37 * hash) + MSG_FIELD_NUMBER;
@@ -604,8 +691,10 @@ public final class ImMessageProto {
         bitField0_ = (bitField0_ & ~0x00000002);
         toId_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
-        msg_ = "";
+        messageId_ = "";
         bitField0_ = (bitField0_ & ~0x00000008);
+        msg_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -648,6 +737,10 @@ public final class ImMessageProto {
         result.toId_ = toId_;
         if (((from_bitField0_ & 0x00000008) != 0)) {
           to_bitField0_ |= 0x00000008;
+        }
+        result.messageId_ = messageId_;
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          to_bitField0_ |= 0x00000010;
         }
         result.msg_ = msg_;
         result.bitField0_ = to_bitField0_;
@@ -712,8 +805,13 @@ public final class ImMessageProto {
           toId_ = other.toId_;
           onChanged();
         }
-        if (other.hasMsg()) {
+        if (other.hasMessageId()) {
           bitField0_ |= 0x00000008;
+          messageId_ = other.messageId_;
+          onChanged();
+        }
+        if (other.hasMsg()) {
+          bitField0_ |= 0x00000010;
           msg_ = other.msg_;
           onChanged();
         }
@@ -960,16 +1058,100 @@ public final class ImMessageProto {
         return this;
       }
 
-      private java.lang.Object msg_ = "";
+      private java.lang.Object messageId_ = "";
       /**
-       * <code>optional string msg = 4;</code>
-       * @return Whether the msg field is set.
+       * <code>optional string messageId = 4;</code>
+       * @return Whether the messageId field is set.
        */
-      public boolean hasMsg() {
+      public boolean hasMessageId() {
         return ((bitField0_ & 0x00000008) != 0);
       }
       /**
-       * <code>optional string msg = 4;</code>
+       * <code>optional string messageId = 4;</code>
+       * @return The messageId.
+       */
+      public java.lang.String getMessageId() {
+        java.lang.Object ref = messageId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            messageId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string messageId = 4;</code>
+       * @return The bytes for messageId.
+       */
+      public com.google.protobuf.ByteString
+      getMessageIdBytes() {
+        java.lang.Object ref = messageId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
+          messageId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string messageId = 4;</code>
+       * @param value The messageId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMessageId(
+              java.lang.String value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000008;
+        messageId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string messageId = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMessageId() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        messageId_ = getDefaultInstance().getMessageId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string messageId = 4;</code>
+       * @param value The bytes for messageId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMessageIdBytes(
+              com.google.protobuf.ByteString value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000008;
+        messageId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object msg_ = "";
+      /**
+       * <code>optional string msg = 5;</code>
+       * @return Whether the msg field is set.
+       */
+      public boolean hasMsg() {
+        return ((bitField0_ & 0x00000010) != 0);
+      }
+      /**
+       * <code>optional string msg = 5;</code>
        * @return The msg.
        */
       public java.lang.String getMsg() {
@@ -987,7 +1169,7 @@ public final class ImMessageProto {
         }
       }
       /**
-       * <code>optional string msg = 4;</code>
+       * <code>optional string msg = 5;</code>
        * @return The bytes for msg.
        */
       public com.google.protobuf.ByteString
@@ -1004,7 +1186,7 @@ public final class ImMessageProto {
         }
       }
       /**
-       * <code>optional string msg = 4;</code>
+       * <code>optional string msg = 5;</code>
        * @param value The msg to set.
        * @return This builder for chaining.
        */
@@ -1013,23 +1195,23 @@ public final class ImMessageProto {
         if (value == null) {
           throw new NullPointerException();
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         msg_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string msg = 4;</code>
+       * <code>optional string msg = 5;</code>
        * @return This builder for chaining.
        */
       public Builder clearMsg() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         msg_ = getDefaultInstance().getMsg();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string msg = 4;</code>
+       * <code>optional string msg = 5;</code>
        * @param value The bytes for msg to set.
        * @return This builder for chaining.
        */
@@ -1038,7 +1220,7 @@ public final class ImMessageProto {
         if (value == null) {
           throw new NullPointerException();
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         msg_ = value;
         onChanged();
         return this;
@@ -1110,9 +1292,9 @@ public final class ImMessageProto {
           descriptor;
   static {
     java.lang.String[] descriptorData = {
-            "\n\024ImMessageProto.proto\"D\n\tImMessage\022\014\n\004t" +
+            "\n\024ImMessageProto.proto\"W\n\tImMessage\022\014\n\004t" +
                     "ype\030\001 \002(\005\022\016\n\006fromId\030\002 \002(\t\022\014\n\004toId\030\003 \001(\t\022" +
-                    "\013\n\003msg\030\004 \001(\t"
+                    "\021\n\tmessageId\030\004 \001(\t\022\013\n\003msg\030\005 \001(\t"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
             .internalBuildGeneratedFileFrom(descriptorData,
@@ -1123,7 +1305,7 @@ public final class ImMessageProto {
     internal_static_ImMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_ImMessage_descriptor,
-            new java.lang.String[] { "Type", "FromId", "ToId", "Msg", });
+            new java.lang.String[] { "Type", "FromId", "ToId", "MessageId", "Msg", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

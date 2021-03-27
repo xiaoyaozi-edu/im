@@ -30,7 +30,7 @@ public class ImServerHandle extends SimpleChannelInboundHandler<ImMessageProto.I
         } else if (message.getType() == ImMessageType.PING.getType()) {
             log.info("收到心跳，消息来源：{}", ctx.channel().attr(ImServerChannelManage.USERID_INFO).get());
             ImServerChannelManage.disposePingMessage((NioSocketChannel) ctx.channel());
-        } else if (message.getType() == ImMessageType.MESSAGE.getType()) {
+        } else if (message.getType() == ImMessageType.NORMAL_MESSAGE.getType()) {
             log.info("收到新消息，消息来源：{}，消息内容是：{}", message.getFromId(), message.getMsg());
             ImServerChannelManage.disposeNormalMessage((NioSocketChannel) ctx.channel(), message);
         } else {
