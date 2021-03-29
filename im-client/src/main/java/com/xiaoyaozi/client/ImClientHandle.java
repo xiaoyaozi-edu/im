@@ -24,6 +24,10 @@ public class ImClientHandle extends SimpleChannelInboundHandler<ImMessageProto.I
     protected void channelRead0(ChannelHandlerContext ctx, ImMessageProto.ImMessage message) throws Exception {
         if (message.getType() == ImMessageType.NORMAL_MESSAGE.getType()) {
             log.info("收到新消息，消息来源：{}，消息内容是：{}", message.getFromId(), message.getMsg());
+        } else if (message.getType() == ImMessageType.SERVER_SUCCESS_RECEIVE.getType()) {
+            log.info("messageId：{}发送成功", message.getMessageId());
+
+            // todo 这里需要做客户端做出消息重复处理，留着各个客户端进行处理，在这里将消息从重试队列中移除
         }
     }
 

@@ -26,7 +26,6 @@ public class ImClientReconnectManage {
         // 重连
         scheduledFuture = SCHEDULED_EXECUTOR.scheduleAtFixedRate(ImClientConnect::prepareConnectImServer,
                 0, 10, TimeUnit.SECONDS);
-
     }
 
     public static void cancelReconnectTask() {

@@ -101,8 +101,10 @@ public class ImClientConnect {
                     String msg = sc.nextLine();
                     String[] split = msg.split(";");
                     ImMessageProto.ImMessage messageProto = ImMessageProto.ImMessage.newBuilder().setType(ImMessageType.NORMAL_MESSAGE.getType())
-                            .setFromId(userId.toString()).setToId(split[0]).setMessageId(ImMessageIdUtil.generate(1L)).setMsg(split[1]).build();
+                            .setFromId(userId.toString()).setToId(split[0]).setMessageId(ImMessageIdUtil.generate(userId)).setMsg(split[1]).build();
                     channel.writeAndFlush(messageProto);
+
+                    // todo 这里需要做客户端做出消息重复处理，留着各个客户端进行处理，在这里将消息加入到重试队列中
                 }
             }
         } catch (InterruptedException e) {

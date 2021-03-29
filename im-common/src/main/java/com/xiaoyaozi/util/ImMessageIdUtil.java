@@ -1,6 +1,8 @@
 package com.xiaoyaozi.util;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -16,43 +18,47 @@ public class ImMessageIdUtil {
      */
     private static final AtomicLong SEQUENCE = new AtomicLong(0L);
     /**
-     * 格式化时间，含毫秒
+     * 32位编码，移除 0，1，I，O
      */
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-//    private static final int SCALE = 64;
-    private static final String CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz<>";
+    private static final List<Character> CHARS = Arrays.asList('2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',
+                                                               'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P',
+                                                               'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    /**
+     * 取模用 2~13 - 1
+     */
+    private static final int SEQUENCE_MASK = ((1 << 13) - 1);
+    /**
+     * 取模用 2~5 - 1
+     */
+    private static final int FORMAT_MASK = ((1 << 5) - 1);
 
     /**
-     * 取模用 2~12 - 1
+     * tip: 消息Id生成规则，64 userId + 42 timestamp + 13 sequence 最终5bit一次转成32进制字符串
+     *
+     * @param userId userId
+     * @return String message_id，长度定为25位
+     * @author xiaoyaozi
+     * createTime: 2021-03-29 16:18
      */
-    private static final int SEQUENCE_MASK = ((1 << 12) - 1);
-    /**
-     * 取模用 2~6 - 1
-     */
-    private static final int FORMAT_MASK = ((1 << 6) - 1);
-
     public static String generate(long userId) {
         StringBuilder buffer = new StringBuilder();
-        // long类型至多64bit，循环10次
-        for (int i = 0; i < 10; i++) {
-            buffer.append(CHARS.charAt(Math.toIntExact(userId & FORMAT_MASK)));
-            userId = userId >> 6;
-        }
+        // 42 timestamp + 13 sequence
         long timestamp = System.currentTimeMillis();
-        System.out.println(timestamp);
-        timestamp = (timestamp << 12) | (SEQUENCE.getAndIncrement() & SEQUENCE_MASK);
-        timestamp = (timestamp << 2) | 1;
-        // 左移4位，接受userId多出的4位
-        timestamp = (timestamp << 4) | userId;
-        for (int i = 0; i < 10; i++) {
-            buffer.append(CHARS.charAt(Math.toIntExact(timestamp & FORMAT_MASK)));
-            timestamp = timestamp >> 6;
+        timestamp = (timestamp << 13) | (SEQUENCE.getAndIncrement() & SEQUENCE_MASK);
+        for (int i = 0; i < 11; i++) {
+            buffer.append(CHARS.get(Math.toIntExact(timestamp & FORMAT_MASK)));
+            timestamp = timestamp >> 5;
         }
-        System.out.println(buffer.reverse().toString());
-        return "";
+        buffer.append('-');
+        // 64 userId
+        for (int i = 0; i < 13; i++) {
+            buffer.append(CHARS.get(Math.toIntExact(userId & FORMAT_MASK)));
+            userId = userId >> 5;
+        }
+        return buffer.reverse().toString();
     }
 
     public static void main(String[] args) {
-        generate(1355433084287389697L);
+        System.out.println(generate(1355433084287389697L));
     }
 }

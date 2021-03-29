@@ -32,3 +32,8 @@ spring:
         max-idle: 100
         max-wait: 1000
         min-idle: 10
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://112.74.171.15:3306/im_server?serverTimezone=CTT&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
